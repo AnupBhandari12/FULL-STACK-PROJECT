@@ -1,16 +1,118 @@
-# React + Vite
+# Dynamic Form Validation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React project that demonstrates schema-driven forms, conditional fields, custom validation, and a review-before-submit flow.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Schema-driven form fields
+- Reusable form handling
+- Conditional fields based on account type
+- Student-specific fields
+- Professional-specific fields
+- Required field validation
+- Email format validation
+- Password length validation
+- Dynamic validation for conditional fields
+- Review screen before final submission
+- Edit form before submit
+- Success message after submit
+- Form reset after successful submission
 
-## React Compiler
+## Conditional Logic
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+If the user selects:
 
-## Expanding the ESLint configuration
+### Student
+- College Name
+- Course
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Professional
+- Company Name
+- Experience
+
+## Validation Rules
+
+- Full Name is required
+- Email is required
+- Email must be valid
+- Password is required
+- Password must be at least 8 characters
+- Account Type is required
+- About section is required
+- Student users must enter College and Course
+- Professional users must enter Company and Experience
+
+## Tech Stack
+
+- React
+- Vite
+- JavaScript
+- Tailwind CSS
+- Bun
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   └── Review.jsx
+├── data/
+│   └── formSchema.js
+├── utils/
+│   └── validation.js
+├── App.jsx
+└── index.css
+
+
+Run Locally
+Install dependencies:
+bun install
+
+Start development server:
+bun run dev
+
+Run ESLint:
+bun run lint
+
+Create production build:
+bun run build
+
+What I Learned
+This project helped me understand:
+- How schema-driven forms work
+- How to generate inputs dynamically
+- How to manage form state with React
+- How computed property names work
+[name]: value
+
+- How conditional rendering works
+- How to validate form data
+- How to store validation errors
+- How to prevent invalid form submission
+- How to create a review step before final submission
+- How to separate form schema and validation logic into different files
+Form Flow
+Form
+  ↓
+Validation
+  ↓
+Continue
+  ↓
+Review Screen
+  ↓
+Edit or Submit
+  ↓
+Success
+
+Build Status
+- ESLint: Passed
+- Production Build: Passed
+Future Improvements
+- Real backend submission
+- Database integration
+- Better password validation
+- Show/hide password
+- Reusable FormField component
+- Form persistence
+- Better accessibility
+- Unit testing
