@@ -1,16 +1,169 @@
-# React + Vite
+# Social Feed with Infinite Scroll
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React social media feed that automatically loads more posts as the user scrolls.
 
-Currently, two official plugins are available:
+This project focuses on pagination, infinite scrolling, Intersection Observer, duplicate prevention, retry handling, and local post interactions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Fetch posts from a public API
+- Load posts in batches
+- Infinite scrolling
+- Intersection Observer API
+- Loading state
+- Error handling
+- Retry failed requests
+- Duplicate post prevention
+- End-of-feed detection
+- Like / Unlike posts
+- Bookmark / Unbookmark posts
+- Responsive feed layout
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React
+- Vite
+- JavaScript
+- Tailwind CSS
+- DummyJSON Posts API
+- Browser Intersection Observer API
+- Bun
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## How It Works
+
+The app initially loads the first batch of posts.
+
+```text
+App Loads
+    ↓
+Fetch First 10 Posts
+    ↓
+Render Feed
+    ↓
+User Scrolls Down
+    ↓
+IntersectionObserver Detects Bottom
+    ↓
+Fetch Next 10 Posts
+    ↓
+Append New Posts
+    ↓
+Repeat Until End of Feed
+
+
+Pagination Logic
+The API uses limit and skip.
+Example:
+limit=10&skip=0
+→ Posts 1–10
+
+limit=10&skip=10
+→ Posts 11–20
+
+limit=10&skip=20
+→ Posts 21–30
+
+The next skip value is calculated using:
+const nextSkip = skipValue + data.posts.length
+
+Duplicate Prevention
+Before storing newly fetched posts, the app checks post IDs and removes duplicate items.
+This prevents duplicate React keys and repeated posts when multiple requests happen close together.
+Request Protection
+A useRef value is used to prevent multiple API requests from running at the same time.
+const isFetchingRef = useRef(false)
+
+If a request is already running, another request is ignored until the first one finishes.
+Infinite Scroll
+The app uses the browser's native IntersectionObserver.
+When the bottom loader becomes visible:
+Bottom Loader Visible
+        ↓
+hasMore = true
+        ↓
+not loading
+        ↓
+no error
+        ↓
+Fetch Next Page
+
+Error and Retry Handling
+If the API request fails:
+- An error message is displayed
+- Automatic loading pauses
+- A Retry button is displayed
+- The same page can be requested again
+- Existing posts are not duplicated
+Like Feature
+Each post maintains local like state.
+Like
+false → true
+true → false
+
+The displayed like count changes when the post is liked or unliked.
+Bookmark Feature
+Each post also maintains local bookmark state.
+Bookmark
+false → Saved
+Saved → Bookmark
+
+Project Structure
+src/
+├── components/
+│   └── PostCard.jsx
+├── App.jsx
+├── index.css
+└── main.jsx
+
+Run Locally
+Install dependencies:
+bun install
+
+Start the development server:
+bun run dev
+
+Run ESLint:
+bun run lint
+
+Create a production build:
+bun run build
+
+What I Learned
+Through this project I practiced:
+- React state management
+- API fetching
+- Async JavaScript
+- Pagination using limit and skip
+- useEffect
+- useRef
+- useCallback
+- Intersection Observer API
+- Infinite scrolling
+- Preventing duplicate API requests
+- Deduplicating arrays
+- Loading and error states
+- Retry logic
+- Conditional rendering
+- Local component state
+- Like and bookmark interactions
+Completion Checklist
+- Initial posts load correctly
+- Scrolling automatically loads more posts
+- Each page loads only once
+- Duplicate posts do not appear
+- Failed requests show an error
+- Retry works without duplicating posts
+- Like and unlike work
+- Bookmark and unbookmark work
+- Feed stops after the last page
+- ESLint passes
+- Production build succeeds
+Future Improvements
+- Persist bookmarks in localStorage
+- Persist likes
+- User profiles
+- Comments
+- Share feature
+- Skeleton loading UI
+- Backend database
+- Authentication
