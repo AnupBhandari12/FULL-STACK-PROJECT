@@ -1,0 +1,12 @@
+{
+  "name": "06.simple-rest-api",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --watch src/server.js",
+    "start": "bun src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
