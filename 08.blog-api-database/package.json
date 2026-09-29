@@ -1,0 +1,13 @@
+{
+  "name": "08.blog-api-database",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --watch src/server.js",
+    "start": "bun src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.23.0"
+  }
+}
