@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: jwt_auth
+
+    ports:
+      - "5434:5432"
+
+    volumes:
+      - jwt_auth_data:/var/lib/postgresql/data
+
+volumes:
+  jwt_auth_data:
